@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHL Online Assessment Platform</title>
+  <meta name="description"
+    content="Secure Candidate Online Assessment Platform with real-time proctoring, MCQ assessment engine, and multi-language coding environment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Top Simulated Browser Window Bar matching photo exactly -->
+  <div class="browser-window-header">
+    <div class="browser-top-strip">
+      <div class="browser-tab-active">
+        <span class="browser-tab-title">SHL</span>
+        <span class="browser-tab-close">&times;</span>
+      </div>
+      <div class="browser-window-controls">
+        <span class="win-btn win-close" title="Close">&#10005;</span>
+      </div>
+    </div>
+    <div class="browser-nav-bar">
+      <div class="nav-controls-left">
+        <button class="nav-icon-btn" title="Back" type="button">&#8592;</button>
+        <button class="nav-icon-btn" title="Forward" type="button">&#8594;</button>
+        <button class="nav-icon-btn" title="Stop" type="button">&#10005;</button>
+        <button class="nav-icon-btn" title="Reload" type="button" onclick="location.reload()">&#8635;</button>
+        <button class="nav-icon-btn" title="Site information" type="button">&#9432;</button>
+        <!-- <span class="nav-page-icon" title="Assessment document">&#128196;</span> -->
+      </div>
+
+      <!-- Real-Time Centered Pill Countdown Timer matching photo -->
+      <div class="header-center-timer" id="assessment-timer-container">
+        <span class="center-timer-pill" id="timer-display">30 : 00</span>
+      </div>
+
+      <div class="toolbar-right-tools">
+        <!-- Fullscreen Expand Button matching image (⛶ / 4 corners) -->
+        <button class="tb-icon-btn" id="btn-fullscreen" title="Toggle Fullscreen" aria-label="Toggle Fullscreen"
+          type="button">
+          <svg class="tb-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+            fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+            </path>
+          </svg>
+        </button>
+
+        <!-- Show tips matching photo -->
+        <!-- <button class="tb-text-action-btn" id="btn-header-tips" type="button" onclick="app.showTipsModal()">
+          <span style="font-size: 13px;">💡</span>
+          <span>Show tips</span>
+        </button> -->
+
+        <!-- Help Button matching photo -->
+        <button class="tb-text-action-btn" id="btn-header-help" type="button" onclick="app.openHelpModal()">
+          <span class="tb-circle-icon">?</span>
+          <span>Help</span>
+        </button>
+
+        <!-- Exit Button matching photo -->
+        <button class="tb-text-action-btn" id="btn-header-exit" type="button" onclick="app.openExitModal()">
+          <span class="tb-circle-icon">&rarr;</span>
+          <span>Exit</span>
+        </button>
+
+        <!-- Hamburger / Cross Toggle Button matching Image 2 -->
+        <button class="tb-icon-btn" id="btn-hamburger" title="Candidate Profile &amp; Settings"
+          aria-label="Candidate Profile &amp; Settings" type="button">
+          <svg class="tb-icon" id="icon-menu-bars" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor"
+            stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg class="tb-icon" id="icon-menu-cross" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+            stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Brand Header Bar matching photo exactly with SHL. on white canvas -->
+  <header class="shl-page-brand-bar">
+    <div class="shl-brand">
+      <span class="shl-logo-brand"><span class="shl-logo-txt">SHL</span><span class="shl-logo-dot">.</span></span>
+    </div>
+  </header>
+
+  <!-- Candidate Side Drawer matching Image 2 -->
+  <aside class="candidate-side-drawer" id="candidate-side-drawer">
+    <div class="drawer-content-body">
+      <!-- Candidate Details matching Image 2 -->
+      <div class="drawer-field-group">
+        <div class="drawer-field-row">
+          <span class="drawer-field-label">Name:</span>
+          <span class="drawer-field-val" id="drawer-candidate-name">amit raj</span>
+        </div>
+        <div class="drawer-field-row drawer-row-pid">
+          <div class="drawer-pid-left">
+            <span class="drawer-field-label">Participant ID:</span>
+            <span class="drawer-field-val" id="drawer-participant-id">450018758676041</span>
+          </div>
+          <button type="button" class="drawer-copy-btn" id="btn-copy-pid" title="Copy Participant ID"
+            aria-label="Copy Participant ID">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="drawer-field-row">
+          <span class="drawer-field-label">Assessment Language:</span>
+          <span class="drawer-field-val">English (US)</span>
+        </div>
+      </div>
+
+      <div class="drawer-separator"></div>
+
+      <!-- Navigation Language Dropdown matching Image 2 -->
+      <div class="drawer-nav-lang-row">
+        <span class="drawer-field-label">Navigation language:</span>
+        <div class="drawer-select-wrapper">
+          <span class="drawer-select-val">English (US)</span>
+          <span class="drawer-chevron">&#9662;</span>
+        </div>
+      </div>
+
+      <div class="drawer-separator"></div>
+
+      <!-- Data Protection Notice Link matching Image 2 -->
+      <div class="drawer-link-row">
+        <a href="#" class="drawer-dpn-link" id="drawer-dpn-link" onclick="app.showNoticeFromDrawer(event)">Data
+          Protection Notice</a>
+      </div>
+    </div>
+  </aside>
+
+
+  <!-- Main Viewport Container -->
+  <main class="app-viewport">
+
+    <!-- ==============================================
+         VIEW 1: Data Protection Notice (Image 1)
+         ============================================== -->
+    <section class="view-section active" id="view-notice">
+      <div class="assessment-card notice-page-card">
+        <!-- Top Notice Banner Box matching Image 1 -->
+        <div class="notice-top-box">
+          <h2 class="notice-main-heading">Candidate Online Assessment Data Protection Notice</h2>
+          <p class="notice-date-text">This Notice was last updated on May 9 2025.</p>
+          <p class="notice-changes-text">
+            <strong>CHANGES TO THIS NOTICE:</strong> This Notice has been updated following an annual review to include
+            new product information, improve the ease of use and address additional data protection laws.
+          </p>
+        </div>
+
+        <!-- 5 Accordion Rows matching Image 1 -->
+        <div class="notice-accordion-list">
+          <div class="notice-acc-item">
+            <div class="notice-acc-header" role="button" tabindex="0">
+              <span class="notice-acc-chevron">&gt;</span>
+              <span class="notice-acc-title">Who we are and Scope of Notice</span>
+            </div>
+            <div class="notice-acc-body">
+              SHL Group Limited and its affiliates provide talent measurement and assessment technologies globally. This
+              notice describes how your personal data, responses, and proctoring telemetry are processed and safeguarded
+              during this online assessment.
+            </div>
+          </div>
+
+          <div class="notice-acc-item">
+            <div class="notice-acc-header" role="button" tabindex="0">
+              <span class="notice-acc-chevron">&gt;</span>
+              <span class="notice-acc-title">Employer as the Data Controller</span>
+            </div>
+            <div class="notice-acc-body">
+              The organization or university that invited you to this assessment acts as the primary Data Controller.
+              They determine the purpose and criteria of evaluation for your recruitment or academic process.
+            </div>
+          </div>
+
+          <div class="notice-acc-item">
+            <div class="notice-acc-header" role="button" tabindex="0">
+              <span class="notice-acc-chevron">&gt;</span>
+              <span class="notice-acc-title">SHL as the Data Controller</span>
+            </div>
+            <div class="notice-acc-body">
+              SHL securely stores and processes your test scores, timestamps, and validation metrics on encrypted cloud
+              infrastructure adhering to ISO 27001 and GDPR compliance standards.
+            </div>
+          </div>
+
+          <div class="notice-acc-item">
+            <div class="notice-acc-header" role="button" tabindex="0">
+              <span class="notice-acc-chevron">&gt;</span>
+              <span class="notice-acc-title">Data Sharing and Your Rights</span>
+            </div>
+            <div class="notice-acc-body">
+              You retain the right to request access to your submitted data, request rectification of erroneous personal
+              details, and inquire about data retention timelines through the designated administrator.
+            </div>
+          </div>
+
+          <div class="notice-acc-item">
+            <div class="notice-acc-header" role="button" tabindex="0">
+              <span class="notice-acc-chevron">&gt;</span>
+              <span class="notice-acc-title">SHL Data Protection Officer Contact Details</span>
+            </div>
+            <div class="notice-acc-body">
+              For any regulatory inquiries regarding privacy and data rights, you may contact our global Data Protection
+              Office at dpo@shl.com.
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Confirm & Continue Controls matching Image 1 -->
+        <div class="notice-footer-row">
+          <label class="notice-checkbox-label" for="check-notice-agree">
+            <input type="checkbox" id="check-notice-agree">
+            <span>I confirm I have read and understood this Notice.</span>
+          </label>
+
+          <button class="btn-notice-continue" id="btn-notice-continue" disabled type="button">
+            Continue
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 2: Candidate Registration & Security Question (Image 2)
+         ============================================== -->
+    <section class="view-section" id="view-registration">
+      <div class="assessment-card registration-page-card">
+        <p class="mandatory-star-notice">* indicates mandatory fields</p>
+
+        <form id="registration-form" onsubmit="return false;">
+          <!-- Section 1: Personal Information -->
+          <div class="reg-section-block">
+            <div class="reg-section-header">
+              <h3 class="reg-green-heading">Personal Information</h3>
+              <button type="button" class="reg-section-toggle-btn" aria-label="Toggle section">
+                <span class="circle-chevron">&#94;</span>
+              </button>
+            </div>
+
+            <div class="reg-section-body">
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="input-reg-no">LPU Registration Number <span
+                    class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <input type="text" class="reg-text-input" id="input-reg-no" required>
+                </div>
+              </div>
+
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="input-name">Name <span class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <input type="text" class="reg-text-input" id="input-name" required>
+                </div>
+              </div>
+
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="input-email">Email ID <span class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <input type="email" class="reg-text-input" id="input-email" required>
+                </div>
+              </div>
+
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="input-contact">Contact Number <span class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <input type="tel" class="reg-text-input" id="input-contact" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Security Question -->
+          <div class="reg-section-block">
+            <div class="reg-section-header">
+              <h3 class="reg-green-heading">Security Question</h3>
+              <button type="button" class="reg-section-toggle-btn" aria-label="Toggle section">
+                <span class="circle-chevron">&#94;</span>
+              </button>
+            </div>
+
+            <div class="reg-section-body">
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="select-security-question">Select a security question <span
+                    class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <select class="reg-select-input" id="select-security-question" required>
+                    <option value="" disabled>Select a security question</option>
+                    <option value="school" selected>Select a security question</option>
+                    <option value="pet">What was the name of your first pet?</option>
+                    <option value="highschool">What was the name of your first high school?</option>
+                    <option value="city">In what city were you born?</option>
+                    <option value="vehicle">What was the make and model of your first vehicle?</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="reg-form-row">
+                <label class="reg-form-label" for="input-security-answer">Answer <span class="req-star">*</span></label>
+                <div class="reg-input-wrap">
+                  <input type="text" class="reg-text-input" id="input-security-answer" placeholder="Enter answer"
+                    required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Agreement and Buttons matching Image 2 -->
+          <div class="reg-footer-controls">
+            <label class="reg-terms-toggle" for="terms-toggle">
+              <input type="checkbox" id="terms-toggle" class="reg-switch-checkbox" checked>
+              <span class="reg-switch-slider"></span>
+              <span class="reg-terms-text">I agree to <a href="#" onclick="return false;">Terms and
+                  Conditions</a></span>
+            </label>
+
+            <div class="reg-btn-actions">
+              <button type="button" class="btn-reg-cancel-link" id="btn-reg-cancel">CANCEL</button>
+              <button type="button" class="btn-reg-continue-solid" id="btn-reg-continue">CONTINUE</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 3: 5-Sections Overview & Rules
+         ============================================== -->
+    <section class="view-section" id="view-sections-overview">
+      <div class="sections-overview-card">
+        <h1 class="card-title">Assessment Structure & Section Overview</h1>
+        <p class="card-subtitle">Please review the 5 evaluation sections and assessment rules before commencing.</p>
+
+        <div class="sections-grid">
+          <div class="section-box">
+            <div>
+              <div class="section-box-header">
+                <span class="section-badge">Section 1</span>
+                <span style="font-size: 12px; color: #64748b;">15 MCQs</span>
+              </div>
+              <h3 class="section-box-title">1. English Comprehension</h3>
+              <p class="section-box-desc">Sentence completion, vocabulary, grammar, and reading comprehension.</p>
+            </div>
+            <div class="section-meta-row">
+              <span>30 Minutes</span>
+              <span>15 Marks</span>
+            </div>
+          </div>
+
+          <div class="section-box">
+            <div>
+              <div class="section-box-header">
+                <span class="section-badge">Section 2</span>
+                <span style="font-size: 12px; color: #64748b;">15 MCQs</span>
+              </div>
+              <h3 class="section-box-title">2. Quantitative Aptitude</h3>
+              <p class="section-box-desc">Numerical reasoning, arithmetic, permutations, probability, and logical
+                puzzles.</p>
+            </div>
+            <div class="section-meta-row">
+              <span>30 Minutes</span>
+              <span>15 Marks</span>
+            </div>
+          </div>
+
+          <div class="section-box">
+            <div>
+              <div class="section-box-header">
+                <span class="section-badge">Section 3</span>
+                <span style="font-size: 12px; color: #64748b;">15 MCQs</span>
+              </div>
+              <h3 class="section-box-title">3. Domain (Technical)</h3>
+              <p class="section-box-desc">Data Structures, Algorithms, Operating Systems, RDBMS, and OOP concepts.</p>
+            </div>
+            <div class="section-meta-row">
+              <span>30 Minutes</span>
+              <span>15 Marks</span>
+            </div>
+          </div>
+
+          <div class="section-box">
+            <div>
+              <div class="section-box-header">
+                <span class="section-badge coding-badge">Section 4</span>
+                <span style="font-size: 12px; color: #92400e;">2 Problems</span>
+              </div>
+              <h3 class="section-box-title">4. Coding Challenge</h3>
+              <p class="section-box-desc">Algorithmic implementation with multi-language compiler and test case
+                validator.</p>
+            </div>
+            <div class="section-meta-row">
+              <span>90 Minutes</span>
+              <span>200 Marks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="instructions-list">
+          <h4>Important Assessment Guidelines:</h4>
+          <ul>
+            <li><strong>Section Timers:</strong> 30 Minutes for each MCQ section, and 90 Minutes for the Coding
+              Challenge.</li>
+            <li><strong>Timer Reset on Section Advance:</strong> Entering each new section automatically starts its
+              fresh timer (30 mins or 90 mins).</li>
+            <li><strong>Sequential Sections:</strong> Sections proceed in sequence (English -> Aptitude -> Domain ->
+              Coding).</li>
+            <li><strong>Question Navigation:</strong> Use the right-side question palette (1-15) or Next/Previous
+              buttons.</li>
+            <li><strong>Coding Section:</strong> Ensure your code compiles and passes sample test cases before
+              finishing.</li>
+          </ul>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn-secondary" id="btn-overview-back">&lt; Back to Profile</button>
+          <button class="btn-primary" id="btn-overview-start">
+            <span>START ASSESSMENT &gt;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 4: MCQ Assessment Engine (Matching Photo Format)
+         ============================================== -->
+    <section class="view-section" id="view-mcq">
+      <div class="mcq-photo-layout-card">
+        <div class="mcq-split-container">
+          <!-- Left Column: Question Statement -->
+          <div class="mcq-split-left-pane">
+            <div class="mcq-statement-body" id="mcq-question-text">
+              Loading question...
+            </div>
+          </div>
+
+          <!-- Right Column: Options & Submit Answer button -->
+          <div class="mcq-split-right-pane">
+            <h3 class="mcq-options-title">Options</h3>
+            <div class="mcq-options-stack" id="mcq-options-list">
+              <!-- Dynamically populated options -->
+            </div>
+
+            <div class="mcq-bottom-submit-container">
+              <button class="btn-submit-answer-green" id="btn-mcq-submit" type="button">
+                SUBMIT ANSWER
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Far Right Vertical Palette Strip matching photo -->
+        <aside class="mcq-vertical-palette-strip">
+          <div class="palette-nodes-column" id="palette-nodes-container">
+            <!-- 1 to 15 circle nodes generated dynamically -->
+          </div>
+          <button type="button" class="palette-scroll-down-btn" id="palette-scroll-down" title="Scroll down"
+            aria-label="Scroll down">&#8964;</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 5: Coding Arena (Exact Match to Attached Photo)
+         ============================================== -->
+    <section class="view-section" id="view-coding">
+      <div class="coding-photo-layout-card">
+        <div class="coding-photo-split-container">
+          <!-- Left Column: Question Tab & Problem Statement -->
+          <div class="coding-question-pane">
+            <div class="coding-tab-header">
+              <span class="coding-tab-title active">Question</span>
+            </div>
+
+            <div class="coding-question-scroll-content">
+              <!-- Language GCC Notice Box matching photo -->
+              <div class="coding-info-callout" id="coding-lang-notice">
+                The current selected programming language is <strong id="callout-lang-name">C99</strong>. We emphasize the submission of a fully working code over partially correct but efficient code. Once <strong>submitted</strong>, you cannot review this problem again. You can use <em>printf()</em> to debug your code. The <em>printf()</em> may not work in case of syntax/runtime error. The version of GCC being used is <strong id="callout-compiler-version">C99</strong>.
+              </div>
+
+              <!-- Main Problem Statement -->
+              <div class="coding-problem-statement" id="coding-desc">
+                The vowels of the English alphabet are (a, e, i, o, u, A, E, I, O, U). Write an algorithm to eliminate all vowels from a given string.
+              </div>
+
+              <div class="coding-spec-block">
+                <h4 class="coding-spec-label">Input</h4>
+                <div class="coding-spec-val" id="coding-input-format">The input consists of a string.</div>
+              </div>
+
+              <div class="coding-spec-block">
+                <h4 class="coding-spec-label">Output</h4>
+                <div class="coding-spec-val" id="coding-output-format">Print a string that excludes all the vowels of the given input string.</div>
+              </div>
+
+              <div class="coding-spec-block" id="coding-note-wrapper">
+                <h4 class="coding-spec-label">Note</h4>
+                <div class="coding-spec-val" id="coding-note">The vowels of the English alphabet are (a, e, i, o, u, A, E, I, O, U). The input string contains English letters only.</div>
+              </div>
+
+              <div class="coding-spec-block">
+                <h4 class="coding-spec-label">Constraints</h4>
+                <div class="coding-spec-val" id="coding-constraints">0 &le; len &le; 100; where len is length of the input string.</div>
+              </div>
+
+              <div class="coding-spec-block">
+                <h4 class="coding-spec-label">Example</h4>
+                <div class="coding-example-box" id="coding-example-content">
+                  <div class="coding-example-row">
+                    <span class="ex-lbl">Input:</span>
+                    <span class="ex-val">haveaniceday</span>
+                  </div>
+                  <div class="coding-example-row">
+                    <span class="ex-lbl">Output:</span>
+                    <span class="ex-val">hvncdy</span>
+                  </div>
+                  <div class="coding-example-row">
+                    <span class="ex-lbl">Explanation:</span>
+                    <span class="ex-val">The output string is "hvncdy".</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Vertical Split Divider with 3 dots handle -->
+          <div class="coding-split-resizer" title="Divider">
+            <span class="resizer-dots">&#8942;</span>
+          </div>
+
+          <!-- Right Column: Code Editor & Bottom Runner Tray -->
+          <div class="coding-editor-pane">
+            <!-- Top Editor Toolbar matching photo -->
+            <div class="coding-editor-top-bar">
+              <div class="coding-editor-tools-left">
+                <button type="button" class="ed-tool-btn" title="Expand Editor" aria-label="Expand Editor">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                </button>
+                <button type="button" class="ed-tool-btn" id="btn-reset-code" title="Reset Boilerplate" aria-label="Reset Boilerplate" onclick="app.resetCode()">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                    <path d="M23 4v6h-6"></path>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                  </svg>
+                </button>
+                <button type="button" class="ed-tool-btn" title="Instructions" aria-label="Instructions" onclick="app.showTipsModal()">
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="coding-lang-dropdown-wrapper">
+                <select class="coding-lang-dropdown" id="coding-lang-select" onchange="app.changeLanguage()">
+                  <option value="c" selected>C (99)</option>
+                  <option value="cpp">C++ (GCC 11)</option>
+                  <option value="java">Java (OpenJDK 17)</option>
+                  <option value="python">Python 3</option>
+                  <option value="javascript">JavaScript (Node.js)</option>
+                </select>
+                <span class="lang-dropdown-chevron">&#9662;</span>
+              </div>
+            </div>
+
+            <!-- Code Editor Box with Line Numbers Gutter -->
+            <div class="coding-editor-canvas-wrap">
+              <div class="coding-editor-gutter" id="editor-gutter"></div>
+              <textarea class="coding-editor-textarea" id="code-textarea" spellcheck="false" wrap="off"></textarea>
+            </div>
+
+            <!-- Bottom Collapsible Tray: Test Cases & Output -->
+            <div class="coding-bottom-tray" id="coding-bottom-tray">
+              <div class="coding-tray-header-bar">
+                <div class="tray-toggle-btn" id="btn-toggle-tray" onclick="app.toggleTestCasesTray()" title="Toggle Test Cases &amp; Output">
+                  <span class="tray-chevron-icon" id="tray-chevron">&#9652;</span>
+                </div>
+
+                <div class="tray-title-left" onclick="app.toggleTestCasesTray()">
+                  <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                  <span>Test Cases &amp; Output</span>
+                </div>
+
+                <div class="tray-action-buttons-right">
+                  <button type="button" class="btn-run-solution" id="btn-run-tests" onclick="app.runSampleTests()">
+                    <span class="play-triangle">&#9658;</span> RUN SOLUTION
+                  </button>
+                  <button type="button" class="btn-coding-next-green" id="btn-coding-next" onclick="app.handleCodingNext()">
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              <!-- Collapsible Content Drawer -->
+              <div class="coding-tray-drawer" id="coding-tray-drawer">
+                <div class="tray-tabs-row">
+                  <button type="button" class="tray-tab-btn active" id="btn-tab-tc1" onclick="app.switchTestTab(1)">Test Case 1</button>
+                  <button type="button" class="tray-tab-btn" id="btn-tab-tc2" onclick="app.switchTestTab(2)">Test Case 2</button>
+                </div>
+                <div class="tray-console-output" id="test-console-output">
+                  Click <strong>RUN SOLUTION</strong> to compile and execute against test cases.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Far Right Vertical Palette Strip with 1 and 2 circular nodes matching photo -->
+        <aside class="coding-vertical-palette-strip">
+          <div class="palette-nodes-column coding-palette-column" id="coding-palette-nodes">
+            <div class="palette-photo-node active" id="coding-node-1" onclick="app.switchCodingProblem(0)">1</div>
+            <div class="palette-photo-node" id="coding-node-2" onclick="app.switchCodingProblem(1)">2</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 6: Final Completion Screen (Positioned at top, all bold text)
+         ============================================== -->
+    <section class="view-section" id="view-thankyou">
+      <div class="completion-amcat-card-top">
+        <p class="completion-para-lead">
+          <strong>You have successfully completed your test. Result will be available on your AMCAT <br>Dashboard within a
+            week.</strong>
+        </p>
+        <p class="completion-para-sub">
+          <strong>Follow us on social media handle to get insights on career related informative articles,<br> jobs and
+            promotions. Check our social media channels.</strong>
+        </p>
+        <div class="completion-channels-list">
+          <p class="channel-line"><strong>Facebook: <a href="https://facebook.com/myamcat" target="_blank"
+                rel="noopener noreferrer">https://facebook.com/myamcat</a></strong></p>
+          <p class="channel-line"><strong>Instagram: <a href="https://www.instagram.com/myamcatofficial/"
+                target="_blank" rel="noopener noreferrer">https://www.instagram.com/myamcatofficial/</a></strong></p>
+          <p class="channel-line"><strong>LinkedIn: <a href="https://www.linkedin.com/showcase/myamcat" target="_blank"
+                rel="noopener noreferrer">https://www.linkedin.com/showcase/myamcat</a></strong></p>
+          <p class="channel-line"><strong>YouTube: <a href="https://www.youtube.com/@AMCATtest" target="_blank"
+                rel="noopener noreferrer">https://www.youtube.com/@AMCATtest</a></strong></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Submission Confirmation Modal -->
+  <div class="modal-overlay" id="submit-modal">
+    <div class="modal-box">
+      <h3 class="modal-title">Confirm Assessment Submission</h3>
+      <p class="modal-msg" id="modal-submit-summary">
+        You are about to submit your assessment. Once submitted, you will not be able to change your answers. Are you
+        sure you want to proceed?
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button class="btn-secondary" onclick="app.closeSubmitModal()">Cancel & Return</button>
+        <button class="btn-primary" onclick="app.confirmFinalSubmit()">Yes, Submit Test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exit Confirmation Modal -->
+  <div class="modal-overlay" id="exit-modal">
+    <div class="modal-box">
+      <h3 class="modal-title">Exit Assessment Confirmation</h3>
+      <p class="modal-msg">
+        Leaving the assessment before completing all sections may invalidate your test score. Are you sure you want to
+        exit?
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button class="btn-secondary" onclick="app.closeExitModal()">Resume Test</button>
+        <button class="btn-primary" style="background-color: #dc2626;" onclick="location.reload()">Exit to
+          Start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help / Instructions Modal -->
+  <div class="modal-overlay" id="help-modal">
+    <div class="modal-box">
+      <h3 class="modal-title">Assessment Instructions</h3>
+      <div class="modal-msg" style="text-align: left;">
+        <p>1. <strong>Navigation:</strong> Use the right-side question palette (1-15) or Next/Previous buttons.</p>
+        <p style="margin-top: 8px;">2. <strong>Palette Legend:</strong></p>
+        <p style="margin-top: 4px;">- Green = Answered</p>
+        <p style="margin-top: 4px;">- Yellow = Marked for Review</p>
+        <p style="margin-top: 4px;">- White = Current Question</p>
+        <p style="margin-top: 4px;">- Dark = Unanswered</p>
+        <p style="margin-top: 8px;">3. <strong>Timer:</strong> The 02:30:00 timer counts down continuously in real time.
+        </p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="btn-primary" onclick="app.closeHelpModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
